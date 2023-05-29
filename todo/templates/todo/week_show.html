@@ -1,0 +1,40 @@
+<h2>{{ week.title }}</h2>
+<h3>Todo list:</h3>
+<h2>{{ error }}</h2>
+    {% for todo in todo_list %}
+        <li>{{ todo }}</li>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{ todo.id }}" name="id" readonly />
+            Title
+            <input type="text" name="title" value="{{ todo.title }}" maxlength="100" required="" id="id_title">
+            <br>
+            MD
+            <input type="number" name="md" value="{{ todo.md }}" required="" id="id_md">
+            <br>
+            TD
+            <input type="number" name="td" value="{{ todo.td }}" required="" id="id_td">
+            <br>
+            WD
+            <input type="number" name="wd" value="{{ todo.wd }}" required="" id="id_wd">
+            <br>
+            TH
+            <input type="number" name="th" value="{{ todo.th }}" required="" id="id_th">
+            <br>
+            FD
+            <input type="number" name="fr" value="{{ todo.fr }}" required="" id="id_fr">
+            <br>
+            ST
+            <input type="number" name="st" value="{{ todo.st }}" required="" id="id_st">
+            <br>
+            SD
+            <input type="number" name="sd" value="{{ todo.sd }}" required="" id="id_sd">
+            <br>
+            <button type="submit">Edit</button>
+            <input type="hidden" name="week", value="{{ week.id }}" required="" id="id_week">
+        </form>
+        <form method="POST">
+
+        </form>
+    {% endfor %}
+</ul>

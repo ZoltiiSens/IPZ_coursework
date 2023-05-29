@@ -31,5 +31,6 @@ urlpatterns = [
     path('logout/', authentication_views.logout_user, name='logout'),
 
     # Todos
-    path('weeklist/', todo_views.week_list, name='week_list')
+    path('weeklist/', todo_views.week_list, name='week_list'),
+    path('week/<int:week_pk>', todo_views.week_show, name="week_show"),
 ]

@@ -1,7 +1,7 @@
 
 {% if user.is_authenticated %}
 
-    <a href="{% url 'login' %}">Let's work</a>
+    <a href="{% url 'week_list' %}">Let's work</a>
     <br>
     <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
