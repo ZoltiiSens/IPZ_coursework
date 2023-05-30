@@ -32,5 +32,7 @@ urlpatterns = [
 
     # Todos
     path('weeklist/', todo_views.week_list, name='week_list'),
-    path('week/<int:week_pk>', todo_views.week_show, name="week_show"),
+    path('week/<int:week_pk>', todo_views.week_show, name='week_show'),
+    path('week/create_todo', todo_views.create_todo, name='create_todo'),
+    path('week/delete_todo', todo_views.delete_todo, name='delete_todo'),
 ]
