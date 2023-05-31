@@ -1,4 +1,6 @@
 week list
+<br>
+<a href="{% url 'week_list_archive' %}">Archive</a>
 
 <style>
     .week_creation_form{
@@ -9,6 +11,14 @@ week list
 <ul>
     {% for week in weeks_list %}
         <li><a href="{% url 'week_show' week.id %}">{{ week.title }}</a></li>
+        <form method="POST" action="{% url 'week_delete' week.id %}">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+        <form method="POST" action="{% url 'week_archive' week.id %}">
+            {% csrf_token %}
+            <button type="submit">Archive</button>
+        </form>
     {% endfor %}
 </ul>
 

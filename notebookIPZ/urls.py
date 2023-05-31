@@ -32,7 +32,10 @@ urlpatterns = [
 
     # Todos
     path('weeklist/', todo_views.week_list, name='week_list'),
+    path('weekarchive/', todo_views.week_list_archive, name='week_list_archive'),
     path('week/<int:week_pk>', todo_views.week_show, name='week_show'),
-    path('week/create_todo', todo_views.create_todo, name='create_todo'),
-    path('week/delete_todo', todo_views.delete_todo, name='delete_todo'),
+    path('week/<int:week_pk>/delete_week', todo_views.week_delete, name='week_delete'),
+    path('week/<int:week_pk>/archive_week', todo_views.week_archive, name='week_archive'),
+    path('week/<int:week_pk>/create_todo', todo_views.create_todo, name='create_todo'),
+    path('week/<int:week_pk>/delete_todo/<int:todo_pk>', todo_views.delete_todo, name='delete_todo'),
 ]

@@ -1,3 +1,5 @@
+<a href="{% url 'week_list' %}">Back</a>
+
 <h2>{{ week.title }}</h2>
 <h3>Todo list:</h3>
 <h2>{{ error }}</h2>
@@ -33,12 +35,13 @@
             <button type="submit">Edit</button>
             <input type="hidden" name="week", value="{{ week.id }}" required="" id="id_week">
         </form>
-        <form method="POST" action="{% url 'delete_todo' %}">
-            <input type="hidden" name="id" value="{{ todo.id }}">
+        <form method="POST" action="{% url 'delete_todo' week.id todo.id %}">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
         </form>
     {% endfor %}
 </ul>
-<form method="POST" action="{% url 'create_todo' %}">
+<form method="POST" action="{% url 'create_todo' week.id %}">
     {% csrf_token %}
     <input type="hidden" name="week", value="{{ week.id }}" required="" id="wewewe">
     <button type="submit">Create</button>

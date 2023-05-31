@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -47,6 +48,7 @@ def login_user(request):
             return render(request, 'authentication/login.html', context)
 
 
+@login_required
 def logout_user(request):
     if request.method == 'POST':
         logout(request)
