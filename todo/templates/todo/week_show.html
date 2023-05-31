@@ -5,7 +5,7 @@
 <h2>{{ error }}</h2>
     {% for todo in todo_list %}
         <li>{{ todo }}</li>
-        <form method="POST">
+        <form method="POST" action="{% url 'todo_edit' week.id todo.id %}">
             {% csrf_token %}
             <input type="hidden" name="id" value="{{ todo.id }}" />
             Title

@@ -10,7 +10,7 @@ week list
 <h2>LIST:</h2>
 <ul>
     {% for week in weeks_list %}
-        <li><a href="{% url 'week_show' week.id %}">{{ week.title }}</a></li>
+        <li><a href="{% url 'week_show' week.id %}">{{ week.title|truncatechars:20 }}</a></li>
         <form method="POST" action="{% url 'week_delete' week.id %}">
             {% csrf_token %}
             <button type="submit">Delete</button>
@@ -24,7 +24,7 @@ week list
 
 
 <h2>CREATE:</h2>
-<form method="POST" class="week_creation_form">
+<form method="POST" action="{% url 'week_create' %}">
     {% csrf_token %}
     {% for field in form %}
         {{ field.label }}

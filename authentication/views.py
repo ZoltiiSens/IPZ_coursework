@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.db import IntegrityError
-from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 
 
 def home(request):
@@ -11,8 +11,8 @@ def home(request):
 
 
 def signup_user(request):
+    context = {'form': UserCreationForm()}
     if request.method == 'GET':
-        context = {'form': UserCreationForm()}
         return render(request, 'authentication/signup.html', context)
     else:
         username = request.POST['username']
@@ -25,16 +25,16 @@ def signup_user(request):
                 login(request, user)
                 return redirect('week_list')
             except IntegrityError:
-                context = {'form': UserCreationForm(), 'error': 'Username has already been taken. Choose the other one'}
+                context['error'] = 'Username has already been taken. Choose the other one'
                 return render(request, 'authentication/signup.html', context)
         else:
-            context = {'form': UserCreationForm(), 'error': 'Passwords did not match'}
+            context['error'] = 'Passwords did not match. Try Again!'
             return render(request, 'authentication/signup.html', context)
 
 
 def login_user(request):
+    context = {'form': AuthenticationForm()}
     if request.method == 'GET':
-        context = {'form': AuthenticationForm()}
         return render(request, 'authentication/login.html', context)
     else:
         username = request.POST['username']
@@ -44,7 +44,7 @@ def login_user(request):
             login(request, user)
             return redirect('week_list')
         else:
-            context = {'form': AuthenticationForm(), 'error': 'Password or username is wrong'}
+            context['error'] = 'Password or username is wrong. Try Again!'
             return render(request, 'authentication/login.html', context)
 
 

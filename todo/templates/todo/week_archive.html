@@ -4,9 +4,8 @@ archived_weeklist
 <br>
 {% for week in weeks_list %}
     {{ week.title }}
-    <form method="POST" action="{% url 'week_list_archive'%}">
+    <form method="POST" action="{% url 'week_unarchive' week.id%}">
         {% csrf_token %}
-        <input type="hidden" name="id" value="{{ week.id }}">
         <button type="submit">Unarchive</button>
     </form>
 {% endfor %}
