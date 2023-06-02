@@ -1,7 +1,11 @@
 week list
 <br>
 <a href="{% url 'week_list_archive' %}">Archive</a>
-
+{% if messages %}
+    {% for message in messages %}
+        <h2 class="{{ message.tags }}">{{ message }}</h2>
+    {% endfor %}
+{% endif %}
 <style>
     .week_creation_form{
         background-color: aqua;

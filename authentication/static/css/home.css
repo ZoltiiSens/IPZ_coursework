@@ -1,0 +1,18 @@
+.start__button{
+    font-size: 2em;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #575757;
+    transition: .4s;
+}
+.start__button:hover{
+    color: #94b49f;
+}
+.link__element{
+    margin: 10px;
+    font-size: 1.4em;
+}
+.divider{
+    margin: 10px;
+    font-size: 1.4em;
+}

@@ -1,8 +1,13 @@
 <a href="{% url 'week_list' %}">Back</a>
 
+{% if messages %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
 <h2>{{ week.title }}</h2>
 <h3>Todo list:</h3>
-<h2>{{ error }}</h2>
     {% for todo in todo_list %}
         <li>{{ todo }}</li>
         <form method="POST" action="{% url 'todo_edit' week.id todo.id %}">

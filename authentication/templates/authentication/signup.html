@@ -1,12 +1,39 @@
-<h1>REGISTRATION</h1>
+{% extends 'authentication/base.html' %}
+{% load static %}
+
+{% block title %}
+    Log in
+{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container">
+            <h1>Signup</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    <br>
+                {% endfor %}
+                <button type="submit">Sign up</button>
+                <p class="error_label">{{ error }}</p>
+            </form>
+            <span class="info">Already has an account? <a href="{% url 'login' %}" class="underlined">Login</a></span>
+        </div>
+    </div>
+
+{% endblock %}
+
+
 <form method="POST">
     {% csrf_token %}
-    {% for field in form %}
-        {{ field.label }}
-        {{ field }}
-        <br>
-    {% endfor %}
-    <button type="submit">Sign up</button>
+
+    <button type="submit"></button>
     <p>{{ error }}</p>
 </form>
 

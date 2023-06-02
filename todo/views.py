@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import TodoWeekForm, TodoTodoForm
 from .models import Week, Todo
 
@@ -44,7 +45,7 @@ def week_create(request):
             new_week.save()
             return redirect('week_list')
         except ValueError:
-            context = 'Bad data passed in. Try again'
+            messages.add_message(request, messages.INFO, 'Bad data passed in. Try again')
             return redirect('week_list')
 
 
@@ -100,10 +101,14 @@ def todo_edit(request, week_pk, todo_pk):
     if request.method == 'GET':
         return redirect('week_show', week_pk=week_pk)
     else:
-        current_todo = get_object_or_404(Todo, pk=todo_pk)
-        todo_changed = TodoTodoForm(request.POST, instance=current_todo)
-        todo_changed.save()
-        return redirect('week_show', week_pk=week_pk)
+        try:
+            current_todo = get_object_or_404(Todo, pk=todo_pk)
+            todo_changed = TodoTodoForm(request.POST, instance=current_todo)
+            todo_changed.save()
+            return redirect('week_show', week_pk=week_pk)
+        except ValueError:
+            messages.add_message(request, messages.INFO, 'Bad data passed in. Try again')
+            return redirect('week_show', week_pk=week_pk)
 
 
 @login_required
