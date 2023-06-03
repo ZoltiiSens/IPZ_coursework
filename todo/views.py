@@ -50,6 +50,21 @@ def week_create(request):
 
 
 @login_required
+def week_edit(request, week_pk):
+    if request.method == 'GET':
+        return redirect('week_list')
+    else:
+        try:
+            current_week = get_object_or_404(Week, pk=week_pk)
+            week_changed = TodoWeekForm(request.POST, instance=current_week)
+            week_changed.save()
+            return redirect('week_list')
+        except ValueError:
+            messages.add_message(request, messages.INFO, 'Bad data passed in. Try again')
+            return redirect('week_list')
+
+
+@login_required
 def week_delete(request, week_pk):
     """Deletes 'Week' element"""
     week = get_object_or_404(Week, pk=week_pk, user=request.user)

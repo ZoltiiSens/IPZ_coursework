@@ -21,6 +21,7 @@ urlpatterns = [
     path('week/<int:week_pk>', todo_views.week_show, name='week_show'),
     path('week/week_create', todo_views.week_create, name='week_create'),
     path('week/<int:week_pk>/week_delete', todo_views.week_delete, name='week_delete'),
+    path('week/<int:week_pk>/week_edit', todo_views.week_edit, name='week_edit'),
     path('week/<int:week_pk>/week_archive', todo_views.week_archive, name='week_archive'),
     path('week/<int:week_pk>/week_unarchive', todo_views.week_unarchive, name='week_unarchive'),
     # ---- Work with Todos

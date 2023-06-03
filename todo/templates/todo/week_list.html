@@ -1,40 +1,99 @@
-week list
-<br>
-<a href="{% url 'week_list_archive' %}">Archive</a>
-{% if messages %}
-    {% for message in messages %}
-        <h2 class="{{ message.tags }}">{{ message }}</h2>
-    {% endfor %}
-{% endif %}
-<style>
-    .week_creation_form{
-        background-color: aqua;
-    }
-</style>
-<h2>LIST:</h2>
-<ul>
-    {% for week in weeks_list %}
-        <li><a href="{% url 'week_show' week.id %}">{{ week.title|truncatechars:20 }}</a></li>
-        <form method="POST" action="{% url 'week_delete' week.id %}">
+{% extends 'todo/base.html' %}
+{% load static %}
+
+{% block title %}
+    Week list
+{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/week_list.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class ="popup_background" id="{% if messages %}active_background{% endif %}" onclick="closePopup()"></div>
+    <div class="wrapper">
+		<section class="container">
+            <header>
+                <h1>Week list</h1>
+                <div class="control_links">
+                    <a class="header_link underlined" href="{% url 'week_list_archive' %}">Archive</a>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="header_link underlined" type="submit">Logout</button>
+                    </form>
+                </div>
+
+            </header>
+			<div class="headline">
+				<div class="headline-title">TITLE</div>
+			</div>
+			<hr>
+			<!------- Line ------->
+            {% for week in weeks_list %}
+                <div class="line">
+                    <a href="{% url 'week_show' week.id %}" class="title">{{ week.title|truncatechars:20 }}</a>
+                    <label for="edit--0" class="edit" id="label-edit--0" onclick="editWeek({{ week.id }})"></label>
+                    <div class ="editing_popup--{{ week.id }} popup" id="">
+                        <div class="close" onclick="closePopup()"><img src="{% static 'images/more.svg' %}" alt=""></div>
+                        <h2>Edit a week</h2>
+                        <form method="POST" action="{% url 'week_edit' week.id %}">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <label for="title">{{ field.label }}</label>
+                                {{ field }}
+                            {% endfor %}
+                            <button class="usual_button" type="submit">Save</button>
+                        </form>
+                        <form method="POST" action="{% url 'week_delete' week.id %}">
+                            {% csrf_token %}
+                            <button class="usual_button" type="submit">Delete</button>
+                        </form>
+                        <form method="POST" action="{% url 'week_archive' week.id %}">
+                            {% csrf_token %}
+                            <button class="usual_button" type="submit">Archive</button>
+                        </form>
+                    </div>
+                </div>
+
+            {% endfor %}
+            <div class="line">
+                <span class="title"></span>
+                <div class="img-wrapper" onclick="createWeek()">
+                    <img src="{% static 'images/more.svg' %}" alt="">
+                </div>
+            </div>
+		</section>
+	</div>
+
+    <div class ="creation_popup popup" id="">
+        <div class="close" onclick="closePopup()"><img src="{% static 'images/more.svg' %}" alt=""></div>
+        <h2>Create a week</h2>
+        <form method="POST" action="{% url 'week_create' %}">
             {% csrf_token %}
-            <button type="submit">Delete</button>
+            {% for field in form %}
+                <label for="title">{{ field.label }}</label>
+                {{ field }}
+            {% endfor %}
+            <button class="usual_button" type="submit">Create</button>
+            <p>{{ error }}</p>
         </form>
-        <form method="POST" action="{% url 'week_archive' week.id %}">
-            {% csrf_token %}
-            <button type="submit">Archive</button>
-        </form>
-    {% endfor %}
-</ul>
+    </div>
+    {% if messages %}
+        <div class ="error_popup popup" id="active_popup">
+            <div class="close" onclick="closePopup()"><img src="{% static 'images/more.svg' %}" alt=""></div>
+            {% for message in messages %}
+                <h2>{{ message }}</h2>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
 
 
-<h2>CREATE:</h2>
-<form method="POST" action="{% url 'week_create' %}">
-    {% csrf_token %}
-    {% for field in form %}
-        {{ field.label }}
-        {{ field }}
-        <br>
-    {% endfor %}
-    <button type="submit">Create</button>
-    <p>{{ error }}</p>
-</form>
+
+
+
+
+
+
+
+
