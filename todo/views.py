@@ -69,10 +69,12 @@ def week_delete(request, week_pk):
     """Deletes 'Week' element"""
     week = get_object_or_404(Week, pk=week_pk, user=request.user)
     if request.method == "GET":
-        return redirect('week_list')
+        pass
     else:
         week.delete()
-        return redirect('week_list')
+    referrer_array = str(request.META["HTTP_REFERER"]).split('/')
+    referer = referrer_array[len(referrer_array) - 2]
+    return redirect(referer)
 
 
 @login_required

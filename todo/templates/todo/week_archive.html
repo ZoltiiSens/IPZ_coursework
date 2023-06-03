@@ -1,11 +1,66 @@
-archived_weeklist
-<br>
+{% extends 'todo/base.html' %}
+{% load static %}
+
+{% block title %}
+    Week list
+{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/week_archive.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class ="popup_background" id="{% if messages %}active_background{% endif %}" onclick="closePopup()"></div>
+    <div class="wrapper">
+		<section class="container">
+            <header>
+                <h1>Week archive</h1>
+                <div class="control_links">
+                    <a class="header_link underlined" href="{% url 'week_list' %}">Week list</a>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="header_link underlined" type="submit">Logout</button>
+                    </form>
+                </div>
+
+            </header>
+			<div class="headline">
+				<div class="headline-title">TITLE</div>
+			</div>
+			<hr>
+			<!------- Lines ------->
+            {% for week in weeks_list %}
+                <div class="line">
+                    <a href="{% url 'week_show' week.id %}" class="title">{{ week.title|truncatechars:45 }}</a>
+                    <label for="edit--0" class="edit" id="label-edit--0" onclick="editWeek({{ week.id }})"></label>
+                    <div class ="editing_popup--{{ week.id }} popup" id="">
+                        <div class="close" onclick="closePopup()"><img src="{% static 'images/more.svg' %}" alt=""></div>
+                        <h2>Edit an archived week</h2>
+                        <h3>"{{ week.title }}"</h3>
+                        <form method="POST" action="{% url 'week_delete' week.id %}">
+                            {% csrf_token %}
+                            <button class="usual_button" type="submit">Delete</button>
+                        </form>
+                        <form method="POST" action="{% url 'week_unarchive' week.id%}">
+                            {% csrf_token %}
+                            <button class="usual_button" type="submit">Unarchive</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+		</section>
+	</div>
+
+
+
+{% endblock %}
+
+
+
+
 <a href="{% url 'week_list' %}">Week list</a>
 <br>
 {% for week in weeks_list %}
     {{ week.title }}
-    <form method="POST" action="{% url 'week_unarchive' week.id%}">
-        {% csrf_token %}
-        <button type="submit">Unarchive</button>
-    </form>
+
 {% endfor %}

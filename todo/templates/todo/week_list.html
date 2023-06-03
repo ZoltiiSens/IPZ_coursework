@@ -31,16 +31,15 @@
 			<!------- Line ------->
             {% for week in weeks_list %}
                 <div class="line">
-                    <a href="{% url 'week_show' week.id %}" class="title">{{ week.title|truncatechars:20 }}</a>
-                    <label for="edit--0" class="edit" id="label-edit--0" onclick="editWeek({{ week.id }})"></label>
+                    <a href="{% url 'week_show' week.id %}" class="title">{{ week.title|truncatechars:45 }}</a>
+                    <div for="edit--0" class="edit" id="label-edit--0" onclick="editWeek({{ week.id }})"></div>
                     <div class ="editing_popup--{{ week.id }} popup" id="">
                         <div class="close" onclick="closePopup()"><img src="{% static 'images/more.svg' %}" alt=""></div>
                         <h2>Edit a week</h2>
                         <form method="POST" action="{% url 'week_edit' week.id %}">
                             {% csrf_token %}
                             {% for field in form %}
-                                <label for="title">{{ field.label }}</label>
-                                {{ field }}
+                                <input type="text" name="title" maxlength="100" required="" id="id_title" value="{{ week.title }}">
                             {% endfor %}
                             <button class="usual_button" type="submit">Save</button>
                         </form>
