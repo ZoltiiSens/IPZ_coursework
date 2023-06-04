@@ -13,7 +13,6 @@ class Week(models.Model):
 
 class Todo(models.Model):
     title = models.CharField(max_length=100)
-    md = models.ValueRange()
     md = models.IntegerField(default=0)
     td = models.IntegerField(default=0)
     wd = models.IntegerField(default=0)

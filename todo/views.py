@@ -51,6 +51,7 @@ def week_create(request):
 
 @login_required
 def week_edit(request, week_pk):
+    """Edits a 'Week' element"""
     if request.method == 'GET':
         return redirect('week_list')
     else:
@@ -67,10 +68,10 @@ def week_edit(request, week_pk):
 @login_required
 def week_delete(request, week_pk):
     """Deletes 'Week' element"""
-    week = get_object_or_404(Week, pk=week_pk, user=request.user)
     if request.method == "GET":
         pass
     else:
+        week = get_object_or_404(Week, pk=week_pk, user=request.user)
         week.delete()
     referrer_array = str(request.META["HTTP_REFERER"]).split('/')
     referer = referrer_array[len(referrer_array) - 2]
@@ -80,10 +81,10 @@ def week_delete(request, week_pk):
 @login_required
 def week_archive(request, week_pk):
     """Archives 'Week' element"""
-    week = get_object_or_404(Week, pk=week_pk, user=request.user)
     if request.method == "GET":
         return redirect('week_list')
     else:
+        week = get_object_or_404(Week, pk=week_pk, user=request.user)
         week.archived = True
         week.save()
         return redirect('week_list')
@@ -92,10 +93,10 @@ def week_archive(request, week_pk):
 @login_required
 def week_unarchive(request, week_pk):
     """Unarchives 'Week' element"""
-    week = get_object_or_404(Week, pk=week_pk, user=request.user)
     if request.method == "GET":
         return redirect('week_list_archive')
     else:
+        week = get_object_or_404(Week, pk=week_pk, user=request.user)
         week.archived = False
         week.save()
         return redirect('week_list_archive')
@@ -104,10 +105,10 @@ def week_unarchive(request, week_pk):
 @login_required
 def todo_create(request, week_pk):
     """Creates a new 'To do' element belongs to the User connected to the Week"""
-    week = get_object_or_404(Week, pk=week_pk, user=request.user)
     if request.method == "GET":
         return redirect('week_show', week_pk=week_pk)
     else:
+        week = get_object_or_404(Week, pk=week_pk, user=request.user)
         new_todo = Todo(title='', week_id=week.id)
         new_todo.save()
         return redirect('week_show', week_pk=week.id)
@@ -131,10 +132,10 @@ def todo_edit(request, week_pk, todo_pk):
 @login_required
 def todo_delete(request, week_pk, todo_pk):
     """Deletes 'To do' element"""
-    week = get_object_or_404(Week, pk=week_pk, user=request.user)
-    todo = get_object_or_404(Todo, pk=todo_pk, week_id=week.id)
     if request.method == "GET":
         return redirect('week_show', week_pk=week_pk)
     else:
+        week = get_object_or_404(Week, pk=week_pk, user=request.user)
+        todo = get_object_or_404(Todo, pk=todo_pk, week_id=week.id)
         todo.delete()
         return redirect('week_show', week_pk=week.id)

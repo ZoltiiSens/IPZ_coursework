@@ -50,6 +50,8 @@ def login_user(request):
 
 @login_required
 def logout_user(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return redirect('home')
+    else:
         logout(request)
         return redirect('home')
