@@ -1,14 +1,18 @@
+{#---------- Base extending ----------#}
 {% extends 'authentication/base.html' %}
 {% load static %}
 
+{#---------- Title ----------#}
 {% block title %}
     Log in
 {% endblock %}
 
+{#---------- Extra styles ----------#}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 {% endblock %}
 
+{#---------- Content block ----------#}
 {% block content %}
     <div class="wrapper">
         <div class="container">
@@ -18,22 +22,12 @@
                 {% for field in form %}
                     <label>{{ field.label }}</label>
                     {{ field }}
-                    <br>
                 {% endfor %}
                 <button type="submit">Sign up</button>
-                <p class="error_label">{{ error }}</p>
+                <p class="error_handler">{{ error }}</p>
             </form>
             <span class="info">Already has an account? <a href="{% url 'login' %}" class="underlined">Login</a></span>
         </div>
     </div>
 
 {% endblock %}
-
-
-<form method="POST">
-    {% csrf_token %}
-
-    <button type="submit"></button>
-    <p>{{ error }}</p>
-</form>
-

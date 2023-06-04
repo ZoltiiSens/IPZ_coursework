@@ -47,15 +47,15 @@ button{
 .underlined:hover{
 	color: #94b49f !important;
 }
-.link__element{
+.link_element{
 	color: #575757;
 	text-decoration: none;
 	transition: .4s;
 }
-.link__element:hover{
+.link_element:hover{
 	color: #94b49f;
 }
-.error_label{
+.error_handler{
 	margin-top: 10px;
 	font-size: .8em;
 	color: #ff3333;

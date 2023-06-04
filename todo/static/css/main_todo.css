@@ -12,6 +12,42 @@ body {
 	padding: 100px;
 	color: #575757;
 }
+h1 {
+	font-weight: 500;
+	font-size: 3em;
+	flex: 1;
+}
+h2{
+	font-weight: 500;
+	font-size: 2em;
+}
+h3{
+    font-weight: 500;
+    margin: 20px;
+    font-size: 1.2em;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+hr {
+	border: 1px solid #575757;
+	border-radius: 1px;
+}
+button{
+	background-color: inherit;
+	outline: none;
+	border: none;
+	cursor: pointer;
+}
+a, a:checked, a:visited{
+	color: inherit;
+	text-decoration: none;
+}
+.underlined{
+	text-decoration: underline !important;
+}
+
+
 .wrapper {
 	margin: 0px auto;
 	padding: 10px;
@@ -31,75 +67,79 @@ body {
 	padding: 25px;
 	overflow: hidden;
 }
-h1 {
-	font-weight: 500;
-	font-size: 3em;
-	flex: 1;
+.img-wrapper{
+	width: 25px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-h3{
-    font-weight: 500;
-    margin: 20px;
-    font-size: 1.2em;
-    max-width: 100%;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
+.img-wrapper img{
+	width: 23px;
+	height: 23px;
 }
-hr {
-	border: 1px solid #575757;
-	border-radius: 1px;
+.usual_button{
+	width: 200px;
+	height: 40px;
+	background-color: inherit;
+	border-radius: 20px;
+	font-weight: 400;
+	text-transform: uppercase;
+	padding: 5px;
+	text-align: center;
+	border: 3px solid #94b49f;
+	transition: .4s;
 }
-a, a:checked, a:visited{
-	color: inherit;
-	text-decoration: none;
+.usual_button:hover{
+	background-color: #94b49f;
+	color: white;
+}
+#active_background, #active_popup{
+	display: flex!important;
+}
+.more{
+	cursor: pointer;
+}
+
+
+header{
+	display: flex;
+	align-items: stretch;
+}
+.header__links_element{
+	font-size: 0.8em;
+	display: flex;
+	margin-bottom: 5px;
 }
 .headline{
 	display: flex;
 	height: 25px;
 }
-.header_link{
-	font-size: 0.8em;
-	display: flex;
-	margin-bottom: 5px;
-}
-header{
-	display: flex;
-	align-items: stretch;
-}
-button{
-	background-color: inherit;
-	outline: none;
-	border: none;
-	cursor: pointer;
-}
-.underlined{
-	text-decoration: underline !important;
-}
+
 .line{
 	display: flex;
 	align-items: center;
 	overflow: hidden;
 	height: 25px;
 }
-.line:nth-child(2n+1) .title, .line:nth-child(2n+1) .img-wrapper{
+.line:nth-child(2n+1) .line__title, .line:nth-child(2n+1) .img-wrapper{
 	background-color: #cee5d0;
 }
-.line .title{
+.line__title{
 	flex:1;
-}
-.line .title{
 	border: none;
 	outline: none;
 	height: 100%;
 	padding: 0 3px;
 }
-.line .edit{
+.line__edit{
 	position: relative;
 	width: 25px;
 	height: 100%;
 	transition: .3s;
 	cursor: pointer;
 }
-.line .edit::before{
+.line__edit::before{
 	content: '';
 	display: block;
 	position: absolute;
@@ -112,7 +152,7 @@ button{
 	box-shadow: 0 5px 0 #575757, 0 -5px 0 #575757;
 	transition: .3s;
 }
-.line .edit::after{
+.line__edit::after{
 	content: '';
 	display: block;
 	position: absolute;
@@ -123,19 +163,6 @@ button{
 	width: 20px;
 	height: 2px;
 	transition: .3s;
-}
-.img-wrapper{
-	width: 25px;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-}
-.img-wrapper img{
-	width: 23px;
-	height: 23px;
-	cursor: pointer;
 }
 .popup_background{
 	position: fixed;
@@ -164,11 +191,7 @@ button{
 	align-items: center;
 	flex-direction: column;
 }
-.popup h2{
-	font-weight: 500;
-	font-size: 2em;
-}
-.popup .close{
+.popup__close{
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -177,7 +200,7 @@ button{
 	transform: rotate(45deg);
 	cursor: pointer;
 }
-.popup .close img{
+.popup__close img{
 	width: 50px;
 	height: 50px;
 }
@@ -202,26 +225,7 @@ button{
 .popup form input:focus{
 	outline: 1px solid #94b49f;
 }
-.popup label{
+.popup form label{
 	display: block;
 	text-align: center;
-}
-.usual_button{
-	width: 200px;
-	height: 40px;
-	background-color: inherit;
-	border-radius: 20px;
-	font-weight: 400;
-	text-transform: uppercase;
-	padding: 5px;
-	text-align: center;
-	border: 3px solid #94b49f;
-	transition: .4s;
-}
-.usual_button:hover{
-	background-color: #94b49f;
-	color: white;
-}
-#active_background, #active_popup{
-	display: flex!important;
 }

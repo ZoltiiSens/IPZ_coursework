@@ -1,9 +1,9 @@
 'use strict'
 
+/**
+ * Closes currently active popup
+ */
 function closePopup(){
-	console.log(12123123)
-	console.log(document.getElementById('active_background'))
-	console.log(document.getElementById('active_popup'))
 	document
 		.getElementById('active_background')
 		.removeAttribute('id');
@@ -13,6 +13,9 @@ function closePopup(){
 
 }
 
+/**
+ * Making week creation popup active
+ */
 function createWeek(){
 	document
 		.getElementsByClassName('creation_popup')[0]
@@ -22,6 +25,10 @@ function createWeek(){
 		.setAttribute('id', 'active_background');
 }
 
+/**
+ * Making week editing popup active
+ * @param {number} week_pk Primary key for week we edit
+ */
 function editWeek(week_pk){
 	document
 		.getElementsByClassName(`editing_popup--${week_pk}`)[0]
@@ -31,6 +38,10 @@ function editWeek(week_pk){
 		.setAttribute('id', 'active_background');
 }
 
+/**
+ * Making todo editing popup active
+ * @param {number} todo_pk Primary key for todo we edit
+ */
 function editTodo(todo_pk){
 	document
 		.getElementsByClassName(`editing_popup--${todo_pk}`)[0]
@@ -40,11 +51,16 @@ function editTodo(todo_pk){
 		.setAttribute('id', 'active_background');
 }
 
+/**
+ * Changes day in todo to the next state
+ * @param {number} todo_pk Primary key for todo we edit
+ * @param {number} day_pk Number of the day we change
+ */
 function editDay(todo_pk, day_pk){
-	let day_input = document.getElementById(`change_day--${ todo_pk }--${day_pk}`);
+	let day_input = document.getElementById(`input_day--${ todo_pk }--${day_pk}`);
 	let day_img = document.getElementById(`img_day--${ todo_pk }--${day_pk}`);
 	let current_val = 0;
-	console.log(day_input.value)
+	// cycle for current_val 0>1>2>3>4>5>0>1>...
 	if (day_input.value !== "5"){
 		current_val = +day_input.value + 1;
 	}

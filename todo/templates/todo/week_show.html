@@ -1,29 +1,36 @@
+{#---------- Base extending ----------#}
 {% extends 'todo/base.html' %}
 {% load static %}
 
+{#---------- Title ----------#}
 {% block title %}
     Week {{ week.title }}
 {% endblock %}
 
+{#---------- Extra styles ----------#}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/week_show.css' %}">
 {% endblock %}
 
+{#---------- Content block ----------#}
 {% block content %}
-	<div class="wrapper">
+	<div class ="popup_background" id="{% if messages %}active_background{% endif %}" onclick="closePopup()"></div>
+    <div class="wrapper">
 		<section class="container">
-            <div class ="popup_background" id="{% if messages %}active_background{% endif %}" onclick="closePopup()"></div>
+
+            <!----- Header ----->
             <header>
                 <h1>{{ week.title}}</h1>
                 <div class="control_links">
-                    <a class="header_link underlined" href="{% url 'week_list' %}">Week list</a>
+                    <a class="header__links_element underlined" href="{% url 'week_list' %}">Week list</a>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
-                        <button class="header_link underlined" type="submit">Logout</button>
+                        <button class="header__links_element underlined" type="submit">Logout</button>
                     </form>
                 </div>
             </header>
 
+            <!----- Head line ----->
 			<div class="headline">
 				<div class="day">MN</div>
 				<div class="day">TS</div>
@@ -37,7 +44,7 @@
 			</div>
 			<hr>
 
-			<!------- Line ------->
+			<!----- Lines ----->
             {% for todo in todo_list %}
                 <div class="line">
                     <div class="img-wrapper"><img src="/static/images/{{ todo.md }}.svg" alt=""></div>
@@ -48,10 +55,12 @@
                     <div class="img-wrapper"><img src="/static/images/{{ todo.st }}.svg" alt=""></div>
                     <div class="img-wrapper"><img src="/static/images/{{ todo.sd }}.svg" alt=""></div>
                     <div class="gap"></div>
-                    <div class="title">{{ todo.title|truncatechars:27}}</div>
-                    <div class="edit" onclick="editTodo({{ todo.id }})"></div>
+                    <div class="line__title">{{ todo.title|truncatechars:27}}</div>
+                    <div class="line__edit" onclick="editTodo({{ todo.id }})"></div>
+
+                    <!----- Todo editing popup ----->
                     <div class ="editing_popup--{{ todo.id }} popup" id="">
-                        <div class="close" onclick="closePopup()"><img src="{% static 'images/more.svg' %}" alt=""></div>
+                        <div class="popup__close" onclick="closePopup()"><img src="{% static 'images/more.svg' %}" alt=""></div>
                         <h2>Edit a todo</h2>
                         <div class="headline">
                             <div class="day">MN</div>
@@ -66,13 +75,13 @@
                         </div>
                         <form method="POST" action="{% url 'todo_edit' week.id todo.id %}">
                             {% csrf_token %}
-                            <input id="change_day--{{ todo.id }}--0" type="hidden" name="md" required="" value="{{ todo.md }}">
-                            <input id="change_day--{{ todo.id }}--1" type="hidden" name="td" required="" value="{{ todo.td }}">
-                            <input id="change_day--{{ todo.id }}--2" type="hidden" name="wd" required="" value="{{ todo.wd }}">
-                            <input id="change_day--{{ todo.id }}--3" type="hidden" name="th" required="" value="{{ todo.th }}">
-                            <input id="change_day--{{ todo.id }}--4" type="hidden" name="fr" required="" value="{{ todo.fr }}">
-                            <input id="change_day--{{ todo.id }}--5" type="hidden" name="st" required="" value="{{ todo.st }}">
-                            <input id="change_day--{{ todo.id }}--6" type="hidden" name="sd" required="" value="{{ todo.sd }}">
+                            <input id="input_day--{{ todo.id }}--0" type="hidden" name="md" required="" value="{{ todo.md }}">
+                            <input id="input_day--{{ todo.id }}--1" type="hidden" name="td" required="" value="{{ todo.td }}">
+                            <input id="input_day--{{ todo.id }}--2" type="hidden" name="wd" required="" value="{{ todo.wd }}">
+                            <input id="input_day--{{ todo.id }}--3" type="hidden" name="th" required="" value="{{ todo.th }}">
+                            <input id="input_day--{{ todo.id }}--4" type="hidden" name="fr" required="" value="{{ todo.fr }}">
+                            <input id="input_day--{{ todo.id }}--5" type="hidden" name="st" required="" value="{{ todo.st }}">
+                            <input id="input_day--{{ todo.id }}--6" type="hidden" name="sd" required="" value="{{ todo.sd }}">
                             <div class="line" style="padding: 0; margin: 0">
                                 <div class="img-wrapper" onclick="editDay({{ todo.id }}, 0)"><img id="img_day--{{ todo.id }}--0" src="/static/images/{{ todo.md }}.svg" alt=""></div>
                                 <div class="img-wrapper" onclick="editDay({{ todo.id }}, 1)"><img id="img_day--{{ todo.id }}--1" src="/static/images/{{ todo.td }}.svg" alt=""></div>
@@ -93,84 +102,29 @@
                     </div>
                 </div>
             {% endfor %}
-        <div class="line">
-            <span class="title"></span>
-            <form class="create_todo" method="POST" action="{% url 'create_todo' week.id %}">
-                {% csrf_token %}
-                <input type="hidden" name="week", value="{{ week.id }}" required="" id="wewewe">
-                <button type="submit" class="img-wrapper">
-                    <img src="{% static 'images/more.svg' %}" alt="">
-                </button>
-            </form>
-        </div>
-        {% if messages %}
-            <div class ="error_popup popup" id="active_popup">
-                <div class="close" onclick="closePopup()"><img src="{% static 'images/more.svg' %}" alt=""></div>
-                {% for message in messages %}
-                    <h2>{{ message }}</h2>
-                {% endfor %}
+
+            <!----- Todo addition line ----->
+            <div class="line">
+                <span class="line__title"></span>
+                <form class="create_todo" method="POST" action="{% url 'create_todo' week.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="week", value="{{ week.id }}" required="" id="wewewe">
+                    <button type="submit" class="img-wrapper more">
+                        <img src="{% static 'images/more.svg' %}" alt="">
+                    </button>
+                </form>
             </div>
-        {% endif %}
 		</section>
 	</div>
 
-
-
-
-    <a href="{% url 'week_list' %}">Back</a>
-
-{% if messages %}
-    {% for message in messages %}
-        <p>{{ message }}</p>
-    {% endfor %}
-{% endif %}
-
-<h2>{{ week.title }}</h2>
-<h3>Todo list:</h3>
-    {% for todo in todo_list %}
-        <li>{{ todo }}</li>
-        <form method="POST" action="{% url 'todo_edit' week.id todo.id %}">
-            {% csrf_token %}
-            <input type="hidden" name="id" value="{{ todo.id }}" />
-            Title
-            <input type="text" name="title" value="{{ todo.title }}" maxlength="100" required="" id="id_title">
-            <br>
-            MD
-            <input type="number" name="md" value="{{ todo.md }}" required="" id="id_md">
-            <br>
-            TD
-            <input type="number" name="td" value="{{ todo.td }}" required="" id="id_td">
-            <br>
-            WD
-            <input type="number" name="wd" value="{{ todo.wd }}" required="" id="id_wd">
-            <br>
-            TH
-            <input type="number" name="th" value="{{ todo.th }}" required="" id="id_th">
-            <br>
-            FD
-            <input type="number" name="fr" value="{{ todo.fr }}" required="" id="id_fr">
-            <br>
-            ST
-            <input type="number" name="st" value="{{ todo.st }}" required="" id="id_st">
-            <br>
-            SD
-            <input type="number" name="sd" value="{{ todo.sd }}" required="" id="id_sd">
-            <br>
-            <button type="submit">Edit</button>
-            <input type="hidden" name="week", value="{{ week.id }}" required="" id="id_week">
-        </form>
-        <form method="POST" action="{% url 'delete_todo' week.id todo.id %}">
-            {% csrf_token %}
-            <button type="submit">Delete</button>
-        </form>
-    {% endfor %}
-</ul>
-<form method="POST" action="{% url 'create_todo' week.id %}">
-    {% csrf_token %}
-    <input type="hidden" name="week", value="{{ week.id }}" required="" id="wewewe">
-    <button type="submit">Create</button>
-</form>
-
-
+    <!----- Error handling popup ----->
+    {% if messages %}
+        <div class ="error_popup popup" id="active_popup">
+            <div class="popup__close" onclick="closePopup()"><img src="{% static 'images/more.svg' %}" alt=""></div>
+            {% for message in messages %}
+                <h2>{{ message }}</h2>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
 

@@ -1,14 +1,14 @@
-.start__button{
+.start_button{
     font-size: 2em;
     text-decoration: none;
     text-transform: uppercase;
     color: #575757;
     transition: .4s;
 }
-.start__button:hover{
+.start_button:hover{
     color: #94b49f;
 }
-.link__element{
+.link_element{
     margin: 10px;
     font-size: 1.4em;
 }
